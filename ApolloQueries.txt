@@ -1,0 +1,79 @@
+# UPDATE USER
+mutation{
+  updateFriend(input: {
+    id: "5df9becf34aacd1cec22d201"
+    firstName: "Michael"
+  }){
+    firstName
+    lastName
+  }
+}
+
+
+# CREATE NEW FRIEND
+mutation {
+  createFriend(input: {
+    firstName: "Tracey"
+    lastName: "SmoochyPants"
+    gender: MALE
+    age: 24
+    language: "German"
+  }){
+    id
+    firstName
+    lastName
+  }
+}
+
+# UPDATE FRIEND
+mutation{
+  updateFriend(input: {
+    id: "1214"
+    firstName: "Michael"
+    age: 34
+  }){
+    firstName
+    age
+  }
+}
+
+
+
+# CREATING A NEW FRIEND WITH ARRAY IN CONTACTS
+ mutation  {
+  createFriend(input: {
+
+  firstName: "Jesus"
+  lastName: "Garcia"
+  gender: MALE
+  age: 25
+  email: "me@me.com"
+  contacts: [
+    {firstName: "Lolo", lastName: "yeah"},
+    {firstName: "Lulu", lastName: "yo"}
+  ]
+  }){
+    id
+    firstName
+    lastName
+  }
+
+}
+
+# SEARCH USER
+query {
+  getFriend(id: "9ec985ac2bb42dba88ed"){
+    firstName
+    lastName
+    age
+    contacts {
+      firstName
+      lastName
+    }
+  }
+}
+
+# DELETE USER
+mutation{
+  deleteFriend(id: "5df9beb524d9710490e6b665")
+}

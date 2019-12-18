@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
-import { Friends } from './dbConnectors'
+// import { Friends } from './dbConnectors'
+const Friend = require('./Friend')
 // RESOLVER RETURNS THE DATA WHEN WE MAKE A QUERY QITH GRAPHQL
 
 // resolver map
@@ -11,7 +12,7 @@ export const resolvers = {
     },
     Mutation: {
         createFriend: (root, { input }) => {
-            const newFriend = new Friends({
+          const newFriend = new Friend({
                 firstName: input.firstName,
                 lastName: input.lastName,
                 gender: input.gender,
@@ -19,22 +20,31 @@ export const resolvers = {
                 language: input.language,
                 email: input.email,
                 contacts: input.contacts
-            });
-
-            newFriend.id = newFriend._id;
+            })
 
             return new Promise((resolve, object) => {
                 newFriend.save((err) => {
-                   if(err) reject(err)
-                   else resolve(newFriend) 
+                    if (err) reject(err)
+                    else resolve(newFriend)
+                })
+            }) 
+
+            // newFriend.id = newFriend._id;
+
+        },
+        updateFriend: (global, { input }) => {
+            return new Promise((resolve, object) => {
+                Friend.findOneAndUpdate({ _id: input.id }, input, { new: true }, (err, friend) => {
+                    if(err) reject(err)
+                    else resolve(friend)
                 })
             })
         },
-        updateFriend: (root, { input }) => {
+        deleteFriend: (global, { id }) => {
             return new Promise((resolve, object) => {
-                Friends.findOneAndUpdate({ _id: input.id}, input, {new: true}, (err, friend) => {
+                Friend.findByIdAndDelete({ _id: id}, (err) => {
                     if(err) reject(err)
-                    else resolve(friend)
+                    else resolve('successfully deleted friend')
                 })
             })
         }

@@ -1,4 +1,4 @@
-import mongoose, { mongo } from 'mongoose';
+const mongoose = require('mongoose')
 // PART OF SQL
 // import Sequelize from 'sequelize';
 // import _ from 'lodash';
@@ -6,36 +6,13 @@ import mongoose, { mongo } from 'mongoose';
 
 // Mongo connection
 
-mongoose.Promise = global.Promise;
-mongo.connect('mongodb://localhost/friends', {
- useUnifiedTopology: true
+// mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/friends', {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
+.then(x => {
+    console.log("CONNECTED TO MONGO! DATABASE!")
+}).catch(err => {
+    console.error('Error connecting to Mongo', err)
 })
-
-const friendSchema = new mongoose.Schema({
-    firstName: {
-        type: String
-    },
-    lastName: {
-        type: String
-    },
-    gender: {
-        type: String
-    },
-    age: {
-        type: Number
-    },
-    language: {
-        type: String
-    },
-    email: {
-        type: String
-    },
-    firstName: {
-        type: Array
-    },
-})
-
-const Friends = mongoose.model('Friend', friendSchema);
 
 // SQL
 
@@ -61,4 +38,4 @@ const Friends = mongoose.model('Friend', friendSchema);
 // }).catch(err => console.log(err))
 
 //Aliens (THIS GOES IN EXPORT)
-export { Friends };
+// export { Friends };
